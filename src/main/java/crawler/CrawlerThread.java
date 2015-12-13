@@ -48,9 +48,9 @@ public class CrawlerThread extends Thread {
 
         downloadMoreURLs();
 
-        //while (!leftURLs.isEmpty()) {
+        while (!leftURLs.isEmpty()) {
         
-        while (getDirectorySize() < targetSize) {
+    //    while (getDirectorySize() < targetSize) {
 
             // crawl all the URLs and throw the results to the specified output
             // directory

@@ -1,5 +1,6 @@
 package crawler;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 import com.amazonaws.auth.AWSCredentials;
@@ -22,6 +23,8 @@ public class BucketWriter {
         
     }
     
+   
+    
     public void write(String key, InputStream inputStream) {
         
         //PropertiesFileCredentialsProvider pfcp = new PropertiesFileCredentialsProvider(credentialsFilePath);
@@ -29,6 +32,27 @@ public class BucketWriter {
         AWSCredentials pfcp = Main.credentials;
         AmazonS3Client myClient = new AmazonS3Client(pfcp);
         myClient.putObject(bucketName, key, inputStream, metadata);
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public void write(String key, InputStream inputStream, String md5Hash) {
+        
+        //PropertiesFileCredentialsProvider pfcp = new PropertiesFileCredentialsProvider(credentialsFilePath);
+        //PropertiesFileCredentialsProvider pfcp = Main.credentials;
+        metadata.setContentMD5(md5Hash);
+        AWSCredentials pfcp = Main.credentials;
+        AmazonS3Client myClient = new AmazonS3Client(pfcp);
+        myClient.putObject(bucketName, key, inputStream, metadata);
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         
     }
 
