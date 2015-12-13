@@ -17,6 +17,8 @@ import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.xml.bind.DatatypeConverter;
+
 import links.LinkManager;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -125,7 +127,10 @@ public class ListCrawler implements Crawler {
                 if (throwSourceToBucket) {
                     
                     byte[] resultByte = DigestUtils.md5(urlSourceString);
-                    String streamMD5 = new String(Base64.getEncoder().encodeToString(resultByte));
+                  
+                    String streamMD5 = DatatypeConverter.printBase64Binary(resultByte);
+                    
+                    //String streamMD5 = new String(Base64.getEncoder().encodeToString(resultByte));
                     
                     InputStream pageSource = new ByteArrayInputStream(
                             urlSourceString.getBytes(StandardCharsets.UTF_8));
